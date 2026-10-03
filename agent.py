@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # Konfigurasi Topik ntfy
-NTFY_TOPIC = "my sport agent"
+NTFY_TOPIC = "DailySportNotifier"
 NTFY_URL = f"https://ntfy.sh/{NTFY_TOPIC}"
 
 HEADERS = {

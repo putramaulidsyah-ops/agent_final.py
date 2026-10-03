@@ -54,7 +54,7 @@ for p,jam,cab,txt in data:
         out+=f"\n**== {cab} {'[PRIORITY]' if p==0 else ''} ==**\n"
         last=cab
     out+=txt+"\n"
-out+=f"\n---\n**{len(data)} Match** | Gratis: flashcore.mobi + flashscore.co.id + m.aiscore.com + ESPN\nJam 7 pagi auto."
+out+=f"\n---\n**{len(data)} Match** | Gratis: flashscore.mobi + flashscore.co.id + m.aiscore.com + ESPN\nJam 7 pagi auto."
 
 push(f"FOUND {len(data)} SIGNAL", out[:3900])
 print(out)

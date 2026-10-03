@@ -1,6 +1,6 @@
 import requests, pytz
 from datetime import datetime
-TOPIC = "my sport agent"
+TOPIC = "mysportagent"
 WIB = pytz.timezone('Asia/Jakarta')
 H = {"User-Agent": "Mozilla/5.0"}
 

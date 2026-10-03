@@ -39,7 +39,7 @@ for cabang,url in SRC.items():
             data.append((prio, jam, cabang, txt))
         except: continue
 
-# Cabang yang gak ada di ESPN -> dari m.aiscore.com + flashscore.co.id
+# Cabang yang gak ada di ESPN -> dari flashscore.co.id
 data += [
  (0,"19:00","🏸 BADMINTON BWF","**19:00 WIB** | BWF Super 750 - Ginting vs Axelsen\n**ML @1.85** | **AH -1.5 @2.05** | **O/U 38.5**\n**SUPER: AH -1.5 Ginting**\n> H2H 5-2\n"),
  (0,"20:30","🎱 SNOOKER","**20:30 WIB** | Snooker - O'Sullivan vs Trump\n**ML @1.70** | **O/U 8.5**\n**SUPER: ML O'Sullivan**\n> Break avg 98\n"),

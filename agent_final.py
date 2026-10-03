@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 import pytz
 
-TOPIC = "better-kranji-9cabang" # GANTI SESUAI TOPIC LU DI ATAS
+TOPIC = "betterr-choco899-9categoryy" # GANTI SESUAI TOPIC LU DI ATAS
 
 # === DATA JADWAL & ODDS (Ini nanti lu ganti manual / API) ===
 # Format: [Cabang, Match, Jam UTC, Odds ML, Odds AH, Odds O/U, Analisa Fair Value]

@@ -1,54 +1,45 @@
 import requests, pytz
 from datetime import datetime
+import os
 
 TOPIC = "betterr-choco899-9categoryy"
 WIB = pytz.timezone('Asia/Jakarta')
-
-def to_wib(iso):
-    try:
-        dt = datetime.fromisoformat(iso.replace("Z","+00:00"))
-        return dt.astimezone(WIB).strftime("%H:%M WIB %d %b")
-    except: return iso
+HEADERS = {"User-Agent": "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36"}
 
 def push(title, body):
     requests.post(f"https://ntfy.sh/{TOPIC}", data=body.encode('utf-8'),
         headers={"Title": title, "Tags": "trophy", "Priority":"high"})
 
-# ESPN Gratis - gak perlu API Key
-LEAGUES = {
-    "BOLA": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard",
-    "BASKET": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
-    "TENIS": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard",
-    "BISBOL": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard",
-    "RUGBI": "https://site.api.espn.com/apis/site/v2/sports/rugby/rugby/scoreboard",
-    "VOLI": "https://site.api.espn.com/apis/site/v2/sports/volleyball/all/scoreboard",
+def to_wib(ts):
+    try:
+        return datetime.fromtimestamp(int(ts), tz=pytz.utc).astimezone(WIB).strftime("%H:%M WIB")
+    except:
+        return datetime.now(WIB).strftime("%H:%M WIB")
+
+def get_sport(sport_path):
+    today = datetime.now(WIB).strftime("%Y%m%d")
+    url = f"https://www.aiscore.com/api/{sport_path}/match/list?date={today}"
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=15).json()
+        data = r.get('data', [])
+        if isinstance(data, dict): # kadang bentuknya dict
+            data = data.get('matches', []) or list(data.values())[0] if data else []
+        return data[:3] # ambil 3 match per cabang biar gak kepanjangan
+    except Exception as e:
+        print(f"Gagal {sport_path}: {e}")
+        return []
+
+# 9 CABANG -> PATH AISCORE
+SPORTS = {
+    "⚽ BOLA": "football",
+    "🏀 BASKET": "basketball",
+    "🎾 TENIS": "tennis",
+    "🏸 BADMINTON": "badminton",
+    "🎱 SNOOKER": "snooker",
+    "🏐 VOLI": "volleyball",
+    "🏉 RUGBI": "rugby",
+    "⚾ BISBOL": "baseball",
+    "🏓 TENIS MEJA": "tabletennis",
 }
 
-report = f"AGENT GRATIS 100% - {datetime.now(WIB).strftime('%d %b %H:%M WIB')}\nTanpa Kuota, Unlimited\n\n"
-total=0
-for cabang, url in LEAGUES.items():
-    try:
-        data = requests.get(url, timeout=10).json()
-        games = data.get('events', [])[:3] # 3 match teratas per cabang
-        for g in games:
-            total+=1
-            jam = to_wib(g['date'])
-            comp = g.get('name','Match')
-            # Status & odds kalau ada
-            try: odds = g['competitions'][0]['odds'][0]['details']
-            except: odds = "ML - | AH hitung manual | O/U hitung manual"
-
-            # Analisa simple Fair Value
-            if cabang=="BOLA": analisa="xG Diff + Fair AH -0.25 | Exp O/U 2.8 -> Cek Over"
-            elif cabang=="BASKET": analisa="Pace 100+ | Exp Total 226 -> Over condong"
-            elif cabang=="TENIS": analisa="Hold/Break model | Exp Diff +3.5 games -> COVER"
-            else: analisa="Form model -> Cek Value ML"
-
-            report += f"== {cabang} ==\n⏰ {jam}\n{comp}\n{odds}\n>> {analisa}\n\n"
-    except Exception as e:
-        report += f"== {cabang} ==\nGak ada jadwal hari ini\n\n"
-
-report += f"Total {total} match terdeteksi.\nNext: jam 7 pagi auto lagi.\n"
-
-print(report)
-push(f"AGENT GRATIS - {total} MATCH", report)
+report = f"🔥

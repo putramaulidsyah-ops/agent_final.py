@@ -47,7 +47,7 @@ data += [
 ]
 
 data = sorted(data, key=lambda x: (x[0], x[1]))
-out = f"**🔥 MY SPORT AGENT - {datetime.now(WIB).strftime('%d %b %H:%M WIB')}**\n"
+out = f"**🔥 Today's List: - {datetime.now(WIB).strftime('%d %b %H:%M WIB')}**\n"
 last=""
 for p,jam,cab,txt in data:
     if cab!=last:

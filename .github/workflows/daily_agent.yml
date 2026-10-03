@@ -1,4 +1,4 @@
-name: DailySportNotifier
+name: dailysportnotifier
 
 on:
   schedule:

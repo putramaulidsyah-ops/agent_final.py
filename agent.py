@@ -134,6 +134,4 @@ def send_ntfy():
         print("Berhasil dikirim ke ntfy!")
     else:
         print(f"Gagal mengirim: {response.status_code}")
-
-if __name__ == "__main__":
     send_ntfy()

@@ -56,5 +56,5 @@ for p,jam,cab,txt in data:
     out+=txt+"\n"
 out+=f"\n---\n**{len(data)} Match** | Gratis: flashcore.mobi + flashscore.co.id + m.aiscore.com + ESPN\nJam 7 pagi auto."
 
-push(f"MY SPORT AGENT {len(data)} SIGNAL", out[:3900])
+push(f"FOUND {len(data)} SIGNAL", out[:3900])
 print(out)

@@ -25,5 +25,5 @@ jobs:
         pip install requests beautifulsoup4
         pip install requests
 
-    - name: Run Sport Agent
+    - name: Run DailySportNotifier
       run: python agent.py
